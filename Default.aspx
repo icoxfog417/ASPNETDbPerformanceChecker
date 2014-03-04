@@ -14,7 +14,7 @@
     <form id="form1" runat="server">
       <div class="container bs-docs-container">
         <div class="page-header">
-          <h1>Oracle Database Access Test</h1>
+          <h1>Database Performance Test</h1>
         </div>
         <div class="row">
             <div class="col-lg-2">

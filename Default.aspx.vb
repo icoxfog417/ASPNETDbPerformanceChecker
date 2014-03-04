@@ -5,7 +5,7 @@ Imports System.Data
 Partial Class _Default
     Inherits System.Web.UI.Page
 
-    Private Const TableName As String = "ORC_SALES_ORDER"
+    Private Const TableName As String = "TST_SALES_ORDER"
     Private Const DataCount As Integer = 100
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -33,12 +33,8 @@ Partial Class _Default
             End If
 
             'Table Creation
-            db.sqlExecution(createTableSql)
-            If Not String.IsNullOrEmpty(db.getErrorMsg) Then
-                Throw New Exception("Table Creation Error:" + db.getErrorMsg)
-            Else
-                tblLog.Rows.Add(makeLog("Table Creation is done", 1))
-            End If
+            createTable(db)
+            tblLog.Rows.Add(makeLog("Table Creation is done", 1))
 
             'Insert
             Dim sw As New System.Diagnostics.Stopwatch()
@@ -118,21 +114,20 @@ Partial Class _Default
 
     End Function
 
-    Private Function createTableSql() As String
-        Dim sql As String = ""
-        sql += "CREATE TABLE " + TableName + "("
-        sql += " OrderNo  NUMBER(15,0) NOT NULL,"
-        sql += " Material VARCHAR2(18),"
-        sql += " Quantity NUMBER(15,3),"
-        sql += " OrderDate   VARCHAR2(8),"
-        sql += " DeliverDate DATE,"
-        sql += " CommentText NVARCHAR2(30),"
-        sql += " CONSTRAINT " + TableName + "_IX00 PRIMARY KEY (OrderNo) USING INDEX "
-        sql += ")"
+    Private Sub createTable(ByVal db As DBExecution)
+        Dim table As New DataTable
+        table.TableName = TableName
+        table.Columns.Add(New DataColumn("OrderNo", GetType(Integer)))
+        table.Columns.Add(New DataColumn("Material", GetType(String)))
+        table.Columns.Add(New DataColumn("Quantity", GetType(Decimal)))
+        table.Columns.Add(New DataColumn("OrderDate", GetType(String)))
+        table.Columns.Add(New DataColumn("DeliverDate", GetType(DateTime)))
+        table.Columns.Add(New DataColumn("CommentText", GetType(String)))
+        table.PrimaryKey = {table.Columns("OrderNo")}
 
-        Return sql
+        db.createTable(table, True)
 
-    End Function
+    End Sub
 
     Private Function dropTableSql() As String
         Dim sql As String = "DROP TABLE " + TableName
