@@ -12,3 +12,5 @@ Supported Database
 * SqlServer 
 
 (other db is not tested,but maybe work. if its don't work , please tell me by issue).
+
+**This site use [DataBaseExecutors](https://www.nuget.org/packages/DataBaseExecutors/),so please install it from nuget.**
