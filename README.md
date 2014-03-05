@@ -1,4 +1,4 @@
-OraclePerformanceChecker
+ASP.NET DbPerformanceChecker
 ========================
 
 Simple Site for testing Performance(ASP.NET WebForm).
@@ -11,4 +11,4 @@ Supported Database
 * Oracle
 * SqlServer 
 
-(other db is not tested,but maybe work).
+(other db is not tested,but maybe work. if its don't work , please tell me by issue).
